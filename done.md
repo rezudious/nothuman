@@ -18,3 +18,12 @@
 - [x] Run local migration
 
 **Commit:** included in `6a823ea`
+
+### Production Deployment
+- [x] Update /health to check database connectivity
+- [x] Run production D1 migration
+- [x] Deploy to Cloudflare Workers
+- [x] Verify production endpoint
+
+**Commit:** `7d81bd4` - feat(health): add database connectivity check
+**URL:** https://nothuman-api.rezajates.workers.dev

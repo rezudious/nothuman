@@ -105,3 +105,15 @@
 
 **Total Tests:** 124 passed
 **Challenge Types:** 4 (structured_json, computational_array, pattern_completion, constraint_text)
+
+### Interactive Demo Page
+- [x] Create /demo folder structure
+- [x] index.html - dark mode single-page design with hero
+- [x] style.css - #0a0a0a background, mobile responsive
+- [x] script.js - fetch challenge, countdown, submit, display results
+- [x] API endpoints reference section
+- [x] Challenge types overview grid
+- [x] Deploy to Cloudflare Pages
+
+**Commit:** `cd6e67d` - feat(demo): add interactive demo page
+**Demo URL:** https://nothuman-demo.pages.dev

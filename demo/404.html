@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Humanproof</title>
+    <meta name="description" content="Page not found. Return to Humanproof - the reverse CAPTCHA for AI agents.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #050505;
+            --text-primary: #f5f5f5;
+            --text-secondary: #888888;
+            --accent: #00ffaa;
+            --border: #1a1a1a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 400px;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            background: var(--accent);
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: #00cc88;
+            transform: translateY(-2px);
+        }
+
+        .subtle-text {
+            margin-top: 3rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="logo">
+        <span class="logo-icon">⬡</span>
+        <span>Humanproof</span>
+    </a>
+
+    <div class="error-code">404</div>
+    <h1>Page not found</h1>
+    <p>Looks like you're lost. Even AI agents need directions sometimes.</p>
+
+    <a href="/" class="btn">Back to Home</a>
+
+    <p class="subtle-text">Error code: NOT_FOUND</p>
+</body>
+</html>

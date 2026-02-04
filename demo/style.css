@@ -1136,6 +1136,85 @@ body {
     color: var(--text-muted);
 }
 
+/* Changelog Section */
+.changelog-section {
+    background: var(--bg-secondary);
+}
+
+.changelog-entries {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.changelog-entry {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.changelog-version {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.version-badge {
+    display: inline-block;
+    padding: 0.375rem 0.875rem;
+    background: var(--accent);
+    color: var(--bg-primary);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'SF Mono', Monaco, monospace;
+}
+
+.version-date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.changelog-content h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.875rem;
+    color: var(--text-primary);
+}
+
+.changelog-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.changelog-content li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.changelog-content li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.changelog-content code {
+    background: var(--bg-tertiary);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: var(--accent);
+    font-family: 'SF Mono', Monaco, monospace;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .hero {

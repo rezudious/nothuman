@@ -540,6 +540,36 @@ TOKEN=$(<span class="code-method">echo</span> $RESULT | <span class="code-method
         </section>
     </main>
 
+        <!-- Changelog Section -->
+        <section id="changelog" class="section changelog-section">
+            <div class="container">
+                <h2 class="section-title">Changelog</h2>
+                <p class="section-subtitle">What's new in Humanproof</p>
+
+                <div class="changelog-entries">
+                    <div class="changelog-entry">
+                        <div class="changelog-version">
+                            <span class="version-badge">v1.0.0</span>
+                            <span class="version-date">February 4, 2026</span>
+                        </div>
+                        <div class="changelog-content">
+                            <h4>Initial Release</h4>
+                            <ul>
+                                <li>4 challenge types: structured_json, computational_array, pattern_completion, constraint_text</li>
+                                <li>JWT verification tokens with 24h validity</li>
+                                <li>Rate limiting (30/min challenge, 60/min verify)</li>
+                                <li>Public stats endpoint for usage analytics</li>
+                                <li>Machine-readable API spec at <code>/spec</code></li>
+                                <li>AI agent discoverability via <code>/llms.txt</code></li>
+                                <li>Status badge endpoint at <code>/badge</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -561,6 +591,7 @@ TOKEN=$(<span class="code-method">echo</span> $RESULT | <span class="code-method
                         <a href="/docs/api.md">API Reference</a>
                         <a href="/docs/integration.md">Integration Guide</a>
                         <a href="/docs/challenges.md">Challenge Types</a>
+                        <a href="#changelog">Changelog</a>
                     </div>
                     <div class="footer-column">
                         <h4>Connect</h4>

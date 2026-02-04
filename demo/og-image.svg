@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f5f5"/>
+      <stop offset="100%" style="stop-color:#00ffaa"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#050505"/>
+      <stop offset="100%" style="stop-color:#0a0a0a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.05">
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#00ffaa" stroke-width="1"/>
+    </pattern>
+    <rect width="1200" height="630" fill="url(#grid)"/>
+  </g>
+
+  <!-- Decorative hexagons -->
+  <g opacity="0.1">
+    <path d="M100 315 L140 285 L180 315 L180 375 L140 405 L100 375 Z" fill="none" stroke="#00ffaa" stroke-width="2"/>
+    <path d="M1020 315 L1060 285 L1100 315 L1100 375 L1060 405 L1020 375 Z" fill="none" stroke="#00ffaa" stroke-width="2"/>
+  </g>
+
+  <!-- Main hexagon icon -->
+  <g transform="translate(550, 180)">
+    <path d="M50 0 L95 28 L95 84 L50 112 L5 84 L5 28 Z" fill="none" stroke="#00ffaa" stroke-width="3"/>
+    <!-- Robot face inside -->
+    <rect x="22" y="32" width="56" height="46" rx="6" fill="none" stroke="#f5f5f5" stroke-width="2.5"/>
+    <circle cx="35" cy="48" r="6" fill="#00ffaa"/>
+    <circle cx="65" cy="48" r="6" fill="#00ffaa"/>
+    <path d="M30 63 L70 63" stroke="#00ffaa" stroke-width="3" stroke-linecap="round"/>
+    <!-- Antenna -->
+    <line x1="50" y1="32" x2="50" y2="16" stroke="#00ffaa" stroke-width="2.5"/>
+    <circle cx="50" cy="12" r="5" fill="#00ffaa"/>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="360" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="72" font-weight="700" fill="url(#textGrad)">Humanproof</text>
+
+  <!-- Tagline -->
+  <text x="600" y="420" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="32" fill="#888888">Prove you're not human.</text>
+
+  <!-- Badge -->
+  <g transform="translate(485, 465)">
+    <rect width="230" height="40" rx="20" fill="rgba(0, 255, 170, 0.15)" stroke="#00ffaa" stroke-width="1.5"/>
+    <text x="115" y="27" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#00ffaa" letter-spacing="1">REVERSE CAPTCHA API</text>
+  </g>
+
+  <!-- Accent glow -->
+  <ellipse cx="600" cy="315" rx="200" ry="150" fill="#00ffaa" opacity="0.03"/>
+</svg>

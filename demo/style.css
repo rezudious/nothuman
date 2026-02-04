@@ -398,6 +398,294 @@ body {
     stroke: var(--text-muted);
 }
 
+/* Flow Diagram Section */
+.flow-diagram-section {
+    background: var(--bg-primary);
+}
+
+.flow-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
+    padding: 2rem;
+}
+
+.flow-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.flow-agent .flow-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--accent-glow);
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flow-agent .flow-icon svg {
+    width: 40px;
+    height: 40px;
+    stroke: var(--accent);
+}
+
+.flow-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.flow-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.flow-arrow svg {
+    width: 60px;
+    height: 24px;
+    stroke: var(--text-muted);
+}
+
+.flow-arrow-text {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.flow-challenge {
+    background: var(--bg-card);
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    min-width: 280px;
+}
+
+.flow-challenge-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.flow-challenge-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.flow-challenge-task {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    background: var(--bg-primary);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.flow-challenge-timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.flow-challenge-timer svg {
+    stroke: var(--accent);
+}
+
+.flow-fork {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-left: 1rem;
+}
+
+.flow-path {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.flow-path-arrow svg {
+    width: 40px;
+    height: 24px;
+}
+
+.flow-path-ai .flow-path-arrow svg {
+    stroke: var(--success);
+}
+
+.flow-path-human .flow-path-arrow svg {
+    stroke: var(--error);
+}
+
+.flow-path-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    min-width: 100px;
+}
+
+.flow-path-box.success {
+    background: rgba(0, 255, 170, 0.1);
+    border: 1px solid var(--success);
+}
+
+.flow-path-box.fail {
+    background: rgba(255, 77, 77, 0.1);
+    border: 1px solid var(--error);
+}
+
+.flow-path-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.flow-path-box.success .flow-path-title {
+    color: var(--success);
+}
+
+.flow-path-box.fail .flow-path-title {
+    color: var(--error);
+}
+
+.flow-path-time {
+    font-family: 'SF Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.flow-result {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.flow-result.success {
+    background: rgba(0, 255, 170, 0.1);
+    color: var(--success);
+}
+
+.flow-result.fail {
+    background: rgba(255, 77, 77, 0.1);
+    color: var(--error);
+}
+
+.flow-result-icon {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* Comparison Table */
+.comparison-table-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 1rem 1.25rem;
+    text-align: left;
+}
+
+.comparison-table thead {
+    background: var(--bg-tertiary);
+}
+
+.comparison-table th {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+}
+
+.comparison-table tbody tr {
+    border-bottom: 1px solid var(--border);
+}
+
+.comparison-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.comparison-table tbody tr:hover {
+    background: var(--bg-tertiary);
+}
+
+.comparison-table td {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.comparison-table td:first-child {
+    color: var(--text-primary);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.table-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--accent-glow);
+    border-radius: 6px;
+    font-family: 'SF Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.time-ai {
+    font-family: 'SF Mono', monospace;
+    font-weight: 600;
+    color: var(--success) !important;
+}
+
+.time-human {
+    font-family: 'SF Mono', monospace;
+    font-weight: 600;
+    color: var(--error) !important;
+}
+
 /* Challenge Types */
 .challenge-types {
     background: var(--bg-primary);
@@ -835,6 +1123,51 @@ body {
 
     .timer {
         text-align: center;
+    }
+
+    /* Flow diagram responsive */
+    .flow-diagram {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+
+    .flow-fork {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .flow-path {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .flow-challenge {
+        min-width: auto;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    /* Comparison table responsive */
+    .comparison-table th,
+    .comparison-table td {
+        padding: 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .comparison-table td:first-child {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .table-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
     }
 }
 

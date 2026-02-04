@@ -3,10 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Humanproof - Reverse CAPTCHA for AI Agents</title>
-    <meta name="description" content="Verify AI agents through computational challenges. A reverse-CAPTCHA API that proves you're not human.">
+    <title>Humanproof - Prove you're not human</title>
+    <meta name="description" content="Reverse CAPTCHA that verifies AI agents. Built for AI-only networks.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://humanproof.dev/">
+    <meta property="og:title" content="Humanproof - Prove you're not human">
+    <meta property="og:description" content="Reverse CAPTCHA that verifies AI agents. Built for AI-only networks.">
+    <meta property="og:image" content="https://humanproof.dev/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://humanproof.dev/">
+    <meta name="twitter:title" content="Humanproof - Prove you're not human">
+    <meta name="twitter:description" content="Reverse CAPTCHA that verifies AI agents. Built for AI-only networks.">
+    <meta name="twitter:image" content="https://humanproof.dev/og-image.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
 </head>
 <body>
     <nav class="nav">
@@ -147,6 +169,147 @@
                             Submit the solution to <code>/verify</code> and receive a signed JWT token proving AI verification.
                         </p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Flow Diagram Section -->
+        <section class="section flow-diagram-section">
+            <div class="container">
+                <h2 class="section-title">AI vs Human</h2>
+                <p class="section-subtitle">Why this works as a reverse CAPTCHA</p>
+
+                <div class="flow-diagram">
+                    <!-- AI Agent -->
+                    <div class="flow-node flow-agent">
+                        <div class="flow-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="4" width="18" height="14" rx="2"/>
+                                <circle cx="12" cy="10" r="2"/>
+                                <path d="M8 18v-2a4 4 0 0 1 8 0v2"/>
+                                <line x1="9" y1="7" x2="9" y2="7.01"/>
+                                <line x1="15" y1="7" x2="15" y2="7.01"/>
+                            </svg>
+                        </div>
+                        <span class="flow-label">AI Agent</span>
+                    </div>
+
+                    <!-- Arrow to challenge -->
+                    <div class="flow-arrow">
+                        <svg viewBox="0 0 60 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M0 12h50M45 6l8 6-8 6"/>
+                        </svg>
+                        <span class="flow-arrow-text">Requests access</span>
+                    </div>
+
+                    <!-- Challenge Box -->
+                    <div class="flow-node flow-challenge">
+                        <div class="flow-challenge-title">Humanproof Challenge</div>
+                        <div class="flow-challenge-content">
+                            <div class="flow-challenge-task">Generate 366-day JSON with checksums</div>
+                            <div class="flow-challenge-timer">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                                3 second time limit
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fork into two paths -->
+                    <div class="flow-fork">
+                        <!-- AI Path (Success) -->
+                        <div class="flow-path flow-path-ai">
+                            <div class="flow-path-arrow">
+                                <svg viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M0 12h30M25 6l8 6-8 6"/>
+                                </svg>
+                            </div>
+                            <div class="flow-path-box success">
+                                <div class="flow-path-title">AI</div>
+                                <div class="flow-path-time">~500ms</div>
+                            </div>
+                            <div class="flow-path-arrow">
+                                <svg viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M0 12h30M25 6l8 6-8 6"/>
+                                </svg>
+                            </div>
+                            <div class="flow-result success">
+                                <span class="flow-result-icon">✓</span>
+                                <span>Access granted</span>
+                            </div>
+                        </div>
+
+                        <!-- Human Path (Fail) -->
+                        <div class="flow-path flow-path-human">
+                            <div class="flow-path-arrow">
+                                <svg viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M0 12h30M25 6l8 6-8 6"/>
+                                </svg>
+                            </div>
+                            <div class="flow-path-box fail">
+                                <div class="flow-path-title">Human</div>
+                                <div class="flow-path-time">5-10 min</div>
+                            </div>
+                            <div class="flow-path-arrow">
+                                <svg viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M0 12h30M25 6l8 6-8 6"/>
+                                </svg>
+                            </div>
+                            <div class="flow-result fail">
+                                <span class="flow-result-icon">✗</span>
+                                <span>Time expires</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison Table -->
+                <div class="comparison-table-wrapper">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Challenge Type</th>
+                                <th>AI Solves In</th>
+                                <th>Human Would Need</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="table-icon">{ }</span>
+                                    Calendar JSON + checksums
+                                </td>
+                                <td class="time-ai">~500ms</td>
+                                <td class="time-human">5-10 min</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="table-icon">[ ]</span>
+                                    Array statistics (500 numbers)
+                                </td>
+                                <td class="time-ai">~300ms</td>
+                                <td class="time-human">10-15 min</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="table-icon">∑</span>
+                                    Math sequence completion
+                                </td>
+                                <td class="time-ai">~200ms</td>
+                                <td class="time-human">3-5 min</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="table-icon">Aa</span>
+                                    Acrostic word puzzle
+                                </td>
+                                <td class="time-ai">~400ms</td>
+                                <td class="time-human">1-2 min</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>

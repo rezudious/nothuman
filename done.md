@@ -126,4 +126,14 @@
 - [x] 7 unit tests
 
 **Commit:** `ad4a843` - feat(api): add GET /stats endpoint
+
+### Structured Logging
+- [x] Create /src/utils/logger.ts
+- [x] JSON format: {timestamp, level, message, ...data}
+- [x] challenge_requested, challenge_solved, challenge_failed
+- [x] token_generated, token_validated
+- [x] rate_limit_hit, unhandled_error
+- [x] Logs visible in Cloudflare Dashboard > Workers > Logs
+
+**Commit:** `93b6054` - feat(logging): add structured JSON logging
 **Total Tests:** 131 passed

@@ -6,6 +6,7 @@ import { tokenRoutes } from './routes/token';
 import { statsRoutes } from './routes/stats';
 import specRoutes from './routes/spec';
 import llmsRoutes from './routes/llms';
+import badgeRoutes from './routes/badge';
 import { corsMiddleware } from './middleware/cors';
 import { rateLimitMiddleware } from './middleware/rate-limit';
 import { errorHandlerMiddleware, notFoundHandler } from './middleware/error-handler';
@@ -47,7 +48,7 @@ app.get('/', (c) => {
 		name: 'NotHuman API',
 		version: '1.0.0',
 		description: 'Reverse-CAPTCHA API for AI agent verification',
-		endpoints: ['/health', '/challenge', '/verify', '/token/validate', '/stats', '/spec', '/llms.txt'],
+		endpoints: ['/health', '/challenge', '/verify', '/token/validate', '/stats', '/spec', '/llms.txt', '/badge'],
 		docs: 'https://github.com/rezudious/nothuman',
 	});
 });
@@ -81,6 +82,7 @@ app.route('/token', tokenRoutes);
 app.route('/stats', statsRoutes);
 app.route('/spec', specRoutes);
 app.route('/llms.txt', llmsRoutes);
+app.route('/badge', badgeRoutes);
 
 // 404 handler for unknown routes
 app.notFound(notFoundHandler);

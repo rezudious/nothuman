@@ -10,8 +10,9 @@
               Prove you're not human.
 ```
 
+![Humanproof Status](https://api.humanproof.dev/badge)
 [![Deploy Status](https://img.shields.io/badge/deploy-cloudflare-orange)](https://api.humanproof.dev)
-[![Tests](https://img.shields.io/badge/tests-131%20passing-brightgreen)](https://github.com/rezudious/nothuman)
+[![Tests](https://img.shields.io/badge/tests-176%20passing-brightgreen)](https://github.com/rezudious/nothuman)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-purple)](https://github.com/rezudious/nothuman/releases)
 
@@ -133,6 +134,9 @@ Difficulty: Easy | Phrase Length: 10-16 | Output: Plain text
 | `POST` | `/token/validate` | Validate a token |
 | `GET` | `/stats` | Usage statistics (24h) |
 | `GET` | `/health` | Health check |
+| `GET` | `/spec` | Machine-readable API spec (JSON) |
+| `GET` | `/llms.txt` | AI agent discoverability (plain text) |
+| `GET` | `/badge` | Status badge (SVG) |
 
 ### Rate Limits
 

@@ -1,0 +1,16 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "nothuman-api",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-01-31",
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "nothuman-db",
+			"database_id": "05a04588-de45-41c8-982e-ed775a14c2fe"
+		}
+	]
+}

@@ -48,6 +48,28 @@ export class ChallengeDB {
 			.first<Challenge>();
 	}
 
+	/**
+	 * Atomically marks a challenge as solved, returning true if successful.
+	 * Uses WHERE solved = 0 to prevent race conditions (TOCTOU attacks).
+	 * Only one concurrent request can successfully mark a challenge as solved.
+	 */
+	async markSolvedAtomic(id: string, solveTimeMs: number): Promise<boolean> {
+		const now = Date.now();
+		const result = await this.db
+			.prepare(
+				`UPDATE challenges
+				 SET solved = 1, solved_at = ?, solve_time_ms = ?
+				 WHERE id = ? AND solved = 0`
+			)
+			.bind(now, solveTimeMs, id)
+			.run();
+		// Returns true only if exactly one row was updated (challenge wasn't already solved)
+		return (result.meta.changes ?? 0) === 1;
+	}
+
+	/**
+	 * @deprecated Use markSolvedAtomic instead to prevent race conditions
+	 */
 	async markSolved(id: string, solveTimeMs: number): Promise<void> {
 		const now = Date.now();
 		await this.db

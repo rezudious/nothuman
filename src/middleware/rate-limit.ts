@@ -24,8 +24,9 @@ function getWindowStart(): number {
 }
 
 function getClientIP(c: Context<AppEnv>): string {
-	// Cloudflare provides the real IP in CF-Connecting-IP header
-	return c.req.header('CF-Connecting-IP') || c.req.header('X-Forwarded-For')?.split(',')[0]?.trim() || 'unknown';
+	// Only trust CF-Connecting-IP header, which is set by Cloudflare and cannot be spoofed.
+	// Do NOT trust X-Forwarded-For as it can be spoofed by attackers to bypass rate limits.
+	return c.req.header('CF-Connecting-IP') || 'unknown';
 }
 
 function getEndpointKey(path: string): string {
@@ -110,10 +111,16 @@ export async function rateLimitMiddleware(c: Context<AppEnv>, next: Next) {
 
 		await next();
 	} catch (error) {
-		// If rate limiting fails, allow the request (fail open)
+		// Fail closed: if rate limiting fails, reject the request for security
 		logger.error('rate_limit_error', {
 			error: error instanceof Error ? error.message : 'Unknown error',
 		});
-		await next();
+		return c.json(
+			{
+				error: 'Service temporarily unavailable',
+				code: 'SERVICE_UNAVAILABLE',
+			},
+			503
+		);
 	}
 }

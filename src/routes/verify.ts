@@ -49,6 +49,12 @@ verifyRoutes.post('/', async (c) => {
 		return c.json({ success: false, error: 'Missing solution' } satisfies VerifyFailureResponse, 400);
 	}
 
+	// Limit solution size to prevent DoS attacks (max 1MB)
+	const MAX_SOLUTION_SIZE = 1024 * 1024; // 1MB
+	if (solution.length > MAX_SOLUTION_SIZE) {
+		return c.json({ success: false, error: 'Solution too large' } satisfies VerifyFailureResponse, 400);
+	}
+
 	// Look up challenge
 	const challenge = await db.getById(challengeId);
 
@@ -64,7 +70,7 @@ verifyRoutes.post('/', async (c) => {
 		return c.json({ success: false, error: 'Challenge expired' } satisfies VerifyFailureResponse, 400);
 	}
 
-	// Check if already solved
+	// Early check if already solved (optimization - the atomic update also handles this)
 	if (challenge.solved === 1) {
 		logger.warn('challenge_failed', { challengeId, reason: 'already_solved' });
 		return c.json({ success: false, error: 'Challenge already solved' } satisfies VerifyFailureResponse, 400);
@@ -97,8 +103,15 @@ verifyRoutes.post('/', async (c) => {
 	// Calculate solve time
 	const solveTimeMs = now - challenge.created_at;
 
-	// Mark as solved in D1
-	await db.markSolved(challengeId, solveTimeMs);
+	// Atomically mark as solved - prevents race conditions (TOCTOU attacks)
+	// Only one concurrent request can succeed even if multiple pass the validation
+	const wasMarked = await db.markSolvedAtomic(challengeId, solveTimeMs);
+
+	if (!wasMarked) {
+		// Another request already solved this challenge
+		logger.warn('challenge_failed', { challengeId, reason: 'already_solved_race' });
+		return c.json({ success: false, error: 'Challenge already solved' } satisfies VerifyFailureResponse, 400);
+	}
 
 	// Generate JWT token
 	const token = await generateVerificationToken(

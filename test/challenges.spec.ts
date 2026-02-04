@@ -3,10 +3,10 @@ import { generateNonce } from '../src/utils/nonce';
 import { generateChallenge, generateChallengeOfType } from '../src/challenges/generator';
 
 describe('Nonce Generation', () => {
-	it('generates 8-character hex string', () => {
+	it('generates 32-character hex string (128 bits of entropy)', () => {
 		const nonce = generateNonce();
-		expect(nonce).toHaveLength(8);
-		expect(nonce).toMatch(/^[0-9a-f]{8}$/);
+		expect(nonce).toHaveLength(32);
+		expect(nonce).toMatch(/^[0-9a-f]{32}$/);
 	});
 
 	it('generates unique nonces', () => {
@@ -26,7 +26,7 @@ describe('Challenge Generation', () => {
 			);
 			expect(challenge.prompt).toBeTruthy();
 			expect(challenge.expectedAnswer).toBeTruthy();
-			expect(challenge.nonce).toHaveLength(8);
+			expect(challenge.nonce).toHaveLength(32);
 			expect(challenge.createdAt).toBeGreaterThan(0);
 			expect(challenge.expiresAt).toBeGreaterThan(challenge.createdAt);
 		});

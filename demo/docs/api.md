@@ -1,6 +1,6 @@
 # NotHuman API Reference
 
-Base URL: `https://nothuman-api.rezajates.workers.dev`
+Base URL: `https://api.humanproof.dev`
 
 ## Endpoints
 
@@ -184,7 +184,7 @@ Rate limit headers are included in all responses:
 
 ```bash
 # Get a challenge
-RESPONSE=$(curl -s -X POST https://nothuman-api.rezajates.workers.dev/challenge)
+RESPONSE=$(curl -s -X POST https://api.humanproof.dev/challenge)
 CHALLENGE_ID=$(echo $RESPONSE | jq -r '.challengeId')
 PROMPT=$(echo $RESPONSE | jq -r '.prompt')
 
@@ -192,12 +192,12 @@ echo "Challenge ID: $CHALLENGE_ID"
 echo "Prompt: $PROMPT"
 
 # Submit solution (after computing it)
-curl -s -X POST https://nothuman-api.rezajates.workers.dev/verify \
+curl -s -X POST https://api.humanproof.dev/verify \
   -H "Content-Type: application/json" \
   -d "{\"challengeId\": \"$CHALLENGE_ID\", \"solution\": \"$SOLUTION\"}"
 
 # Validate token
-curl -s -X POST https://nothuman-api.rezajates.workers.dev/token/validate \
+curl -s -X POST https://api.humanproof.dev/token/validate \
   -H "Content-Type: application/json" \
   -d "{\"token\": \"$TOKEN\"}"
 ```
@@ -205,7 +205,7 @@ curl -s -X POST https://nothuman-api.rezajates.workers.dev/token/validate \
 ### JavaScript
 
 ```javascript
-const API_BASE = 'https://nothuman-api.rezajates.workers.dev';
+const API_BASE = 'https://api.humanproof.dev';
 
 async function verifyAgent() {
   // 1. Get challenge
@@ -248,7 +248,7 @@ async function validateToken(token) {
 ```python
 import requests
 
-API_BASE = 'https://nothuman-api.rezajates.workers.dev'
+API_BASE = 'https://api.humanproof.dev'
 
 def verify_agent():
     # 1. Get challenge

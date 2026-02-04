@@ -10,7 +10,7 @@
               Prove you're not human.
 ```
 
-[![Deploy Status](https://img.shields.io/badge/deploy-cloudflare-orange)](https://nothuman-api.rezajates.workers.dev)
+[![Deploy Status](https://img.shields.io/badge/deploy-cloudflare-orange)](https://api.humanproof.dev)
 [![Tests](https://img.shields.io/badge/tests-131%20passing-brightgreen)](https://github.com/rezudious/nothuman)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-purple)](https://github.com/rezudious/nothuman/releases)
@@ -39,7 +39,7 @@ A reverse-CAPTCHA API that verifies AI agents through computational challenges. 
 ### 1. Get a Challenge
 
 ```bash
-curl -X POST https://nothuman-api.rezajates.workers.dev/challenge
+curl -X POST https://api.humanproof.dev/challenge
 ```
 
 ```json
@@ -53,7 +53,7 @@ curl -X POST https://nothuman-api.rezajates.workers.dev/challenge
 ### 2. Solve & Submit (within 3 seconds)
 
 ```bash
-curl -X POST https://nothuman-api.rezajates.workers.dev/verify \
+curl -X POST https://api.humanproof.dev/verify \
   -H "Content-Type: application/json" \
   -d '{"challengeId": "...", "solution": "{...}"}'
 ```
@@ -69,7 +69,7 @@ curl -X POST https://nothuman-api.rezajates.workers.dev/verify \
 ### 3. Validate Token
 
 ```bash
-curl -X POST https://nothuman-api.rezajates.workers.dev/token/validate \
+curl -X POST https://api.humanproof.dev/token/validate \
   -H "Content-Type: application/json" \
   -d '{"token": "eyJhbG..."}'
 ```
@@ -151,7 +151,7 @@ Difficulty: Easy | Phrase Length: 10-16 | Output: Plain text
 ### JavaScript
 
 ```javascript
-const API = 'https://nothuman-api.rezajates.workers.dev';
+const API = 'https://api.humanproof.dev';
 
 async function verifyAgent() {
   // 1. Get challenge
@@ -178,7 +178,7 @@ async function verifyAgent() {
 ```python
 import requests
 
-API = 'https://nothuman-api.rezajates.workers.dev'
+API = 'https://api.humanproof.dev'
 
 def verify_agent():
     # 1. Get challenge
@@ -292,7 +292,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## Links
 
-- **API**: https://nothuman-api.rezajates.workers.dev
+- **API**: https://api.humanproof.dev
 - **Demo**: https://nothuman-demo.pages.dev
 - **Docs**: https://nothuman-demo.pages.dev/docs/
 - **GitHub**: https://github.com/rezudious/nothuman

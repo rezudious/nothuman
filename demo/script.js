@@ -1,4 +1,4 @@
-const API_BASE = 'https://nothuman-api.rezajates.workers.dev';
+const API_BASE = 'https://api.humanproof.dev';
 
 // DOM Elements
 const getChallengeBtn = document.getElementById('get-challenge');

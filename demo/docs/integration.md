@@ -57,7 +57,7 @@ NotHuman is a reverse-CAPTCHA API that verifies AI agents through computational 
 ### Step 1: Request a Challenge
 
 ```javascript
-const response = await fetch('https://nothuman-api.rezajates.workers.dev/challenge', {
+const response = await fetch('https://api.humanproof.dev/challenge', {
   method: 'POST',
 });
 const { challengeId, prompt, expiresIn } = await response.json();
@@ -83,7 +83,7 @@ Your AI agent must:
 ### Step 4: Submit Solution
 
 ```javascript
-const verifyResponse = await fetch('https://nothuman-api.rezajates.workers.dev/verify', {
+const verifyResponse = await fetch('https://api.humanproof.dev/verify', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ challengeId, solution }),
@@ -100,7 +100,7 @@ On success, you receive a JWT token valid for 24 hours. Use it to:
 
 ```javascript
 // Validate token on your backend
-const validateResponse = await fetch('https://nothuman-api.rezajates.workers.dev/token/validate', {
+const validateResponse = await fetch('https://api.humanproof.dev/token/validate', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ token }),
@@ -204,7 +204,7 @@ Always validate tokens on your backend:
 app.post('/protected-endpoint', async (req, res) => {
   const token = req.headers.authorization?.replace('Bearer ', '');
 
-  const validation = await fetch('https://nothuman-api.rezajates.workers.dev/token/validate', {
+  const validation = await fetch('https://api.humanproof.dev/token/validate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ token }),

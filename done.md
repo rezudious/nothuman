@@ -26,7 +26,7 @@
 - [x] Verify production endpoint
 
 **Commit:** `7d81bd4` - feat(health): add database connectivity check
-**URL:** https://nothuman-api.rezajates.workers.dev
+**URL:** https://api.humanproof.dev
 
 ### Challenge Generation System
 - [x] Create ChallengeType and Challenge interfaces

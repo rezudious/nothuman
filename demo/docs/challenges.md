@@ -278,8 +278,8 @@ Use the demo at https://nothuman-demo.pages.dev to:
 Or use curl:
 ```bash
 # Get challenge
-curl -s -X POST https://nothuman-api.rezajates.workers.dev/challenge | jq '.'
+curl -s -X POST https://api.humanproof.dev/challenge | jq '.'
 
 # Check stats
-curl -s https://nothuman-api.rezajates.workers.dev/stats | jq '.'
+curl -s https://api.humanproof.dev/stats | jq '.'
 ```

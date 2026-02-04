@@ -858,6 +858,10 @@ body {
     color: var(--bg-primary);
 }
 
+.copy-btn .copy-text {
+    display: inline;
+}
+
 .copy-btn .copied-text {
     display: none;
 }

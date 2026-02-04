@@ -1,5 +1,6 @@
 import type { Context, Next } from 'hono';
 import type { AppEnv } from '../index';
+import { logger } from '../utils/logger';
 
 interface ErrorResponse {
 	error: string;
@@ -10,7 +11,15 @@ export async function errorHandlerMiddleware(c: Context<AppEnv>, next: Next) {
 	try {
 		await next();
 	} catch (err) {
-		console.error('Unhandled error:', err);
+		const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+		const errorStack = err instanceof Error ? err.stack : undefined;
+
+		logger.error('unhandled_error', {
+			error: errorMessage,
+			path: c.req.path,
+			method: c.req.method,
+			stack: errorStack,
+		});
 
 		const response: ErrorResponse = {
 			error: 'Internal server error',

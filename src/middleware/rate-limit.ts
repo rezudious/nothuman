@@ -1,5 +1,6 @@
 import type { Context, Next } from 'hono';
 import type { AppEnv } from '../index';
+import { logger } from '../utils/logger';
 
 // Rate limits per minute by endpoint
 const RATE_LIMITS: Record<string, number> = {
@@ -76,6 +77,12 @@ export async function rateLimitMiddleware(c: Context<AppEnv>, next: Next) {
 		// Check if over limit
 		if (currentCount > limit) {
 			const retryAfter = Math.ceil((windowStart + WINDOW_MS - Date.now()) / 1000);
+			logger.warn('rate_limit_hit', {
+				ip,
+				endpoint,
+				limit,
+				count: currentCount,
+			});
 			return c.json(
 				{
 					error: 'Rate limit exceeded',
@@ -104,7 +111,9 @@ export async function rateLimitMiddleware(c: Context<AppEnv>, next: Next) {
 		await next();
 	} catch (error) {
 		// If rate limiting fails, allow the request (fail open)
-		console.error('Rate limit error:', error);
+		logger.error('rate_limit_error', {
+			error: error instanceof Error ? error.message : 'Unknown error',
+		});
 		await next();
 	}
 }

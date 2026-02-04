@@ -6,6 +6,7 @@ import { validateComputationalArray } from '../challenges/types/computational-ar
 import { validatePatternCompletion } from '../challenges/types/pattern-completion';
 import { validateConstraintText } from '../challenges/types/constraint-text';
 import { generateVerificationToken } from '../auth/token';
+import { logger } from '../utils/logger';
 
 const verifyRoutes = new Hono<AppEnv>();
 
@@ -52,17 +53,20 @@ verifyRoutes.post('/', async (c) => {
 	const challenge = await db.getById(challengeId);
 
 	if (!challenge) {
+		logger.warn('challenge_failed', { challengeId, reason: 'not_found' });
 		return c.json({ success: false, error: 'Challenge not found' } satisfies VerifyFailureResponse, 404);
 	}
 
 	// Check if expired
 	const now = Date.now();
 	if (now > challenge.expires_at) {
+		logger.warn('challenge_failed', { challengeId, reason: 'expired' });
 		return c.json({ success: false, error: 'Challenge expired' } satisfies VerifyFailureResponse, 400);
 	}
 
 	// Check if already solved
 	if (challenge.solved === 1) {
+		logger.warn('challenge_failed', { challengeId, reason: 'already_solved' });
 		return c.json({ success: false, error: 'Challenge already solved' } satisfies VerifyFailureResponse, 400);
 	}
 
@@ -86,6 +90,7 @@ verifyRoutes.post('/', async (c) => {
 	}
 
 	if (!isValid) {
+		logger.warn('challenge_failed', { challengeId, reason: 'invalid_solution' });
 		return c.json({ success: false, error: 'Invalid solution' } satisfies VerifyFailureResponse, 400);
 	}
 
@@ -104,6 +109,15 @@ verifyRoutes.post('/', async (c) => {
 		},
 		c.env.JWT_SECRET
 	);
+
+	logger.info('challenge_solved', {
+		challengeId,
+		type: challenge.type,
+		solveTimeMs,
+		success: true,
+	});
+
+	logger.info('token_generated', { challengeId });
 
 	// Return success response with token
 	const response: VerifySuccessResponse = {

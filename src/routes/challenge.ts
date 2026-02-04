@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import type { AppEnv } from '../index';
 import { generateChallenge } from '../challenges/generator';
 import { ChallengeDB } from '../db';
+import { logger } from '../utils/logger';
 
 const challengeRoutes = new Hono<AppEnv>();
 
@@ -27,6 +28,11 @@ challengeRoutes.post('/', async (c) => {
 		parameters: challenge.parameters ? JSON.stringify(challenge.parameters) : null,
 		created_at: challenge.createdAt,
 		expires_at: challenge.expiresAt,
+	});
+
+	logger.info('challenge_requested', {
+		challengeId: challenge.id,
+		type: challenge.type,
 	});
 
 	// Calculate expiresIn (milliseconds remaining)

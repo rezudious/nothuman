@@ -34,10 +34,10 @@ describe('Challenge Generation', () => {
 			expect(challenge.expectedAnswer).toContain(challenge.nonce);
 		});
 
-		it('sets expiry 5 minutes after creation', () => {
+		it('sets expiry 3 seconds after creation', () => {
 			const challenge = generateChallenge();
 			const ttl = challenge.expiresAt - challenge.createdAt;
-			expect(ttl).toBe(5 * 60 * 1000);
+			expect(ttl).toBe(3000);
 		});
 	});
 

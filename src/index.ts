@@ -38,7 +38,18 @@ app.use('*', errorHandlerMiddleware);
 app.use('*', corsMiddleware);
 app.use('*', rateLimitMiddleware);
 
-// Health check (no rate limiting needed, but CORS applies)
+// Root endpoint - API info
+app.get('/', (c) => {
+	return c.json({
+		name: 'NotHuman API',
+		version: '1.0.0',
+		description: 'Reverse-CAPTCHA API for AI agent verification',
+		endpoints: ['/health', '/challenge', '/verify', '/token/validate'],
+		docs: 'https://github.com/rezudious/nothuman',
+	});
+});
+
+// Health check
 app.get('/health', async (c) => {
 	let dbStatus: 'connected' | 'error' = 'error';
 	let error: string | undefined;

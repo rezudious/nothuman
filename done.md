@@ -147,4 +147,16 @@
 
 **Commit:** `cfa7220` - docs: add API documentation
 **Docs URL:** https://nothuman-demo.pages.dev/docs/
+
+### README v1.0
+- [x] ASCII logo banner
+- [x] Badges (deploy, tests, license, version)
+- [x] Feature list
+- [x] Quick start (3 steps)
+- [x] All 4 challenge types documented
+- [x] Integration examples (JS, Python)
+- [x] Contributing guidelines
+- [x] Project structure
+
+**Commit:** `179c05f` - docs: enhance README for v1.0 release
 **Total Tests:** 131 passed

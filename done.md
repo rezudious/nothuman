@@ -179,3 +179,37 @@
 **Commit:** `553475e` - feat(landing): upgrade demo to full landing page
 **Landing URL:** https://humanproof.dev
 **Total Tests:** 131 passed
+
+## 2026-02-04
+
+### Security Hardening
+- [x] Fix rate limit IP spoofing - remove X-Forwarded-For trust (only CF-Connecting-IP)
+- [x] Change rate limiter to fail-closed (503 on DB errors)
+- [x] Increase nonce entropy from 32 bits to 128 bits
+- [x] Add solution size validation (1MB max)
+- [x] Fix TOCTOU race condition with atomic markSolvedAtomic()
+- [x] Create 6 security test files
+
+**Commits:** `094a447` through `69efbcd`
+**Total Tests:** 176 passed
+
+### Landing Page Enhancements
+- [x] Visual AI vs Human flow diagram
+- [x] Comparison table (AI vs human solve times)
+- [x] Open Graph meta tags for social sharing
+- [x] Favicons (SVG, PNG 16x16, 32x32, Apple Touch)
+- [x] Tabbed integration examples (JS/Python/curl) with copy buttons
+- [x] Changelog section (v1.0.0)
+- [x] Custom 404 page
+- [x] robots.txt and sitemap.xml
+
+**Commit:** `27e834c` - feat(landing): add changelog section and custom 404 page
+
+### API Endpoints for AI Agents
+- [x] GET /spec - Machine-readable JSON API specification
+- [x] GET /llms.txt - Plain text AI agent discoverability
+- [x] GET /badge - SVG status badge (operational/down)
+- [x] Update README with new endpoints and status badge
+
+**Commits:** `8c59e15`, `20a9e0a`, `1f97828`
+**Fix:** Corrected AppEnv import path from '../types' to '../index'

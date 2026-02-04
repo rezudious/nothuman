@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://humanproof.dev/sitemap.xml

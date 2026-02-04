@@ -3,6 +3,9 @@ import type { D1Database } from '@cloudflare/workers-types';
 import { challengeRoutes } from './routes/challenge';
 import { verifyRoutes } from './routes/verify';
 import { tokenRoutes } from './routes/token';
+import { corsMiddleware } from './middleware/cors';
+import { rateLimitMiddleware } from './middleware/rate-limit';
+import { errorHandlerMiddleware, notFoundHandler } from './middleware/error-handler';
 
 // Types
 type Bindings = {
@@ -30,7 +33,12 @@ interface HealthResponse {
 // App
 const app = new Hono<AppEnv>();
 
-// Health check
+// Global middleware (order matters)
+app.use('*', errorHandlerMiddleware);
+app.use('*', corsMiddleware);
+app.use('*', rateLimitMiddleware);
+
+// Health check (no rate limiting needed, but CORS applies)
 app.get('/health', async (c) => {
 	let dbStatus: 'connected' | 'error' = 'error';
 	let error: string | undefined;
@@ -56,5 +64,8 @@ app.get('/health', async (c) => {
 app.route('/challenge', challengeRoutes);
 app.route('/verify', verifyRoutes);
 app.route('/token', tokenRoutes);
+
+// 404 handler for unknown routes
+app.notFound(notFoundHandler);
 
 export default app;

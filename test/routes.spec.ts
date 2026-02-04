@@ -19,6 +19,16 @@ describe('API Routes', () => {
 				solve_time_ms INTEGER
 			)
 		`).run();
+
+		await env.DB.prepare(`
+			CREATE TABLE IF NOT EXISTS rate_limits (
+				ip TEXT NOT NULL,
+				endpoint TEXT NOT NULL,
+				window_start INTEGER NOT NULL,
+				count INTEGER DEFAULT 1,
+				PRIMARY KEY (ip, endpoint, window_start)
+			)
+		`).run();
 	});
 
 	describe('POST /challenge', () => {

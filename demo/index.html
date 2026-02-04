@@ -3,131 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NotHuman - Reverse CAPTCHA for AI Agents</title>
+    <title>Humanproof - Reverse CAPTCHA for AI Agents</title>
+    <meta name="description" content="Verify AI agents through computational challenges. A reverse-CAPTCHA API that proves you're not human.">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
 </head>
 <body>
-    <div class="container">
-        <header class="hero">
-            <h1>NotHuman</h1>
-            <p class="tagline">Prove you're not human</p>
-            <p class="description">
-                A reverse-CAPTCHA API that verifies AI agents through computational challenges.
-                Challenges expire in 3 seconds and require precise computational answers that
-                only machines can solve reliably.
-            </p>
-        </header>
-
-        <main class="demo-section">
-            <h2>Interactive Demo</h2>
-
-            <div class="demo-controls">
-                <button id="get-challenge" class="btn btn-primary">Get Challenge</button>
-                <span id="timer" class="timer hidden"></span>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">⬡</span>
+                <span class="logo-text">Humanproof</span>
+            </a>
+            <div class="nav-links">
+                <a href="#how-it-works">How it Works</a>
+                <a href="#demo">Try Demo</a>
+                <a href="#api">API</a>
+                <a href="/docs/" class="nav-link-docs">Docs</a>
+                <a href="https://github.com/rezudious/nothuman" target="_blank" class="nav-link-github">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                </a>
             </div>
+        </div>
+    </nav>
 
-            <div id="challenge-container" class="challenge-container hidden">
-                <div class="challenge-header">
-                    <span class="label">Challenge ID:</span>
-                    <code id="challenge-id"></code>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">Reverse CAPTCHA API</div>
+                <h1 class="hero-title">
+                    <span class="hero-title-gradient">Humanproof</span>
+                </h1>
+                <p class="hero-tagline">Prove you're not human.</p>
+                <p class="hero-description">
+                    Verify AI agents through computational challenges that only machines can solve.
+                    3-second time limits. Cryptographic tokens. Zero human interference.
+                </p>
+                <div class="hero-cta">
+                    <a href="#demo" class="btn btn-primary">Try the Demo</a>
+                    <a href="/docs/" class="btn btn-secondary">Read the Docs</a>
                 </div>
-                <div class="challenge-prompt">
-                    <span class="label">Prompt:</span>
-                    <pre id="challenge-prompt"></pre>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-value">3s</span>
+                        <span class="stat-label">Time Limit</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">4</span>
+                        <span class="stat-label">Challenge Types</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">24h</span>
+                        <span class="stat-label">Token Validity</span>
+                    </div>
                 </div>
             </div>
+            <div class="hero-visual">
+                <div class="code-preview">
+                    <div class="code-header">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <pre class="code-content"><code><span class="code-comment">// Verify your AI agent</span>
+<span class="code-keyword">const</span> { token } = <span class="code-keyword">await</span> fetch(
+  <span class="code-string">'https://api.humanproof.dev/verify'</span>,
+  {
+    method: <span class="code-string">'POST'</span>,
+    body: JSON.stringify({
+      challengeId,
+      solution
+    })
+  }
+).<span class="code-method">then</span>(r => r.json());
 
-            <div id="solution-container" class="solution-container hidden">
-                <label for="solution" class="label">Your Solution:</label>
-                <textarea id="solution" placeholder="Paste your solution here..."></textarea>
-                <button id="submit-solution" class="btn btn-submit">Submit Solution</button>
-            </div>
-
-            <div id="result-container" class="result-container hidden">
-                <div id="result" class="result"></div>
-            </div>
-        </main>
-
-        <section class="api-reference">
-            <h2>API Endpoints</h2>
-
-            <div class="endpoint">
-                <div class="endpoint-header">
-                    <span class="method post">POST</span>
-                    <code>/challenge</code>
-                </div>
-                <p>Request a new challenge. Returns challenge ID, prompt, and expiration time.</p>
-                <pre class="code-block">curl -X POST https://api.humanproof.dev/challenge</pre>
-            </div>
-
-            <div class="endpoint">
-                <div class="endpoint-header">
-                    <span class="method post">POST</span>
-                    <code>/verify</code>
-                </div>
-                <p>Submit a solution. Returns JWT token on success.</p>
-                <pre class="code-block">{
-  "challengeId": "uuid",
-  "solution": "your-answer"
-}</pre>
-            </div>
-
-            <div class="endpoint">
-                <div class="endpoint-header">
-                    <span class="method post">POST</span>
-                    <code>/token/validate</code>
-                </div>
-                <p>Validate a verification token.</p>
-                <pre class="code-block">{
-  "token": "jwt-token"
-}</pre>
-            </div>
-        </section>
-
-        <section class="challenge-types">
-            <h2>Challenge Types</h2>
-            <div class="types-grid">
-                <div class="type-card">
-                    <h3>Structured JSON</h3>
-                    <p>Generate a 12-month calendar with computed properties for each day.</p>
-                </div>
-                <div class="type-card">
-                    <h3>Computational Array</h3>
-                    <p>Analyze a large array to find primes and compute statistics.</p>
-                </div>
-                <div class="type-card">
-                    <h3>Pattern Completion</h3>
-                    <p>Complete a mathematical sequence and extract values at prime indices.</p>
-                </div>
-                <div class="type-card">
-                    <h3>Constraint Text</h3>
-                    <p>Generate words whose first letters spell out a target phrase.</p>
+<span class="code-comment">// Token: eyJhbG...</span></code></pre>
                 </div>
             </div>
         </section>
 
-        <footer class="footer">
-            <div class="footer-links">
-                <a href="/docs/" class="footer-link">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                        <line x1="16" y1="13" x2="8" y2="13"/>
-                        <line x1="16" y1="17" x2="8" y2="17"/>
-                        <polyline points="10 9 9 9 8 9"/>
-                    </svg>
-                    Documentation
-                </a>
-                <a href="https://github.com/rezudious/nothuman" target="_blank" rel="noopener" class="footer-link">
-                    <svg class="github-icon" viewBox="0 0 24 24" width="24" height="24">
-                        <path fill="currentColor" d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                    </svg>
-                    GitHub
-                </a>
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="section how-it-works">
+            <div class="container">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Three steps to verify your AI agent</p>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                        </div>
+                        <div class="step-number">01</div>
+                        <h3 class="step-title">Request</h3>
+                        <p class="step-description">
+                            Call <code>/challenge</code> to get a unique computational challenge with a 3-second time limit.
+                        </p>
+                    </div>
+
+                    <div class="step-connector">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                <line x1="8" y1="21" x2="16" y2="21"/>
+                                <line x1="12" y1="17" x2="12" y2="21"/>
+                            </svg>
+                        </div>
+                        <div class="step-number">02</div>
+                        <h3 class="step-title">Solve</h3>
+                        <p class="step-description">
+                            Your AI agent computes the answer. Challenges require precise math that humans can't do in 3 seconds.
+                        </p>
+                    </div>
+
+                    <div class="step-connector">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                        </div>
+                        <div class="step-number">03</div>
+                        <h3 class="step-title">Verify</h3>
+                        <p class="step-description">
+                            Submit the solution to <code>/verify</code> and receive a signed JWT token proving AI verification.
+                        </p>
+                    </div>
+                </div>
             </div>
-            <p class="base-url">Base URL: <code>https://api.humanproof.dev</code></p>
-        </footer>
-    </div>
+        </section>
+
+        <!-- Challenge Types Section -->
+        <section class="section challenge-types">
+            <div class="container">
+                <h2 class="section-title">Challenge Types</h2>
+                <p class="section-subtitle">Four computational challenges designed for AI</p>
+
+                <div class="types-grid">
+                    <div class="type-card">
+                        <div class="type-icon">{ }</div>
+                        <h3>Structured JSON</h3>
+                        <p>Generate a 12-month calendar with computed properties for each day.</p>
+                        <span class="type-difficulty medium">Medium</span>
+                    </div>
+                    <div class="type-card">
+                        <div class="type-icon">[ ]</div>
+                        <h3>Computational Array</h3>
+                        <p>Analyze 300-600 numbers to find primes and compute statistics.</p>
+                        <span class="type-difficulty medium">Medium</span>
+                    </div>
+                    <div class="type-card">
+                        <div class="type-icon">∑</div>
+                        <h3>Pattern Completion</h3>
+                        <p>Complete a mathematical sequence and extract values at prime indices.</p>
+                        <span class="type-difficulty hard">Hard</span>
+                    </div>
+                    <div class="type-card">
+                        <div class="type-icon">Aa</div>
+                        <h3>Constraint Text</h3>
+                        <p>Generate words whose first letters spell out a target phrase.</p>
+                        <span class="type-difficulty easy">Easy</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Demo Section -->
+        <section id="demo" class="section demo-section">
+            <div class="container">
+                <h2 class="section-title">Try It Now</h2>
+                <p class="section-subtitle">Get a challenge and see what your AI needs to solve</p>
+
+                <div class="demo-box">
+                    <div class="demo-controls">
+                        <button id="get-challenge" class="btn btn-primary btn-large">Get Challenge</button>
+                        <span id="timer" class="timer hidden"></span>
+                    </div>
+
+                    <div id="challenge-container" class="challenge-container hidden">
+                        <div class="challenge-header">
+                            <span class="label">Challenge ID</span>
+                            <code id="challenge-id"></code>
+                        </div>
+                        <div class="challenge-prompt">
+                            <span class="label">Prompt</span>
+                            <pre id="challenge-prompt"></pre>
+                        </div>
+                    </div>
+
+                    <div id="solution-container" class="solution-container hidden">
+                        <label for="solution" class="label">Your Solution</label>
+                        <textarea id="solution" placeholder="Paste your AI's solution here..."></textarea>
+                        <button id="submit-solution" class="btn btn-submit">Submit Solution</button>
+                    </div>
+
+                    <div id="result-container" class="result-container hidden">
+                        <div id="result" class="result"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- API Reference Section -->
+        <section id="api" class="section api-section">
+            <div class="container">
+                <h2 class="section-title">API Reference</h2>
+                <p class="section-subtitle">Simple REST API with JWT authentication</p>
+
+                <div class="api-grid">
+                    <div class="api-card">
+                        <div class="api-method post">POST</div>
+                        <code class="api-endpoint">/challenge</code>
+                        <p>Request a new challenge. Returns challengeId, prompt, and expiresIn.</p>
+                    </div>
+                    <div class="api-card">
+                        <div class="api-method post">POST</div>
+                        <code class="api-endpoint">/verify</code>
+                        <p>Submit solution. Returns JWT token on success with solve time.</p>
+                    </div>
+                    <div class="api-card">
+                        <div class="api-method post">POST</div>
+                        <code class="api-endpoint">/token/validate</code>
+                        <p>Validate a token. Returns payload with challenge details.</p>
+                    </div>
+                    <div class="api-card">
+                        <div class="api-method get">GET</div>
+                        <code class="api-endpoint">/stats</code>
+                        <p>Usage statistics. Returns 24h metrics by challenge type.</p>
+                    </div>
+                </div>
+
+                <div class="api-base">
+                    <span class="label">Base URL</span>
+                    <code>https://api.humanproof.dev</code>
+                </div>
+
+                <div class="api-cta">
+                    <a href="/docs/api.md" class="btn btn-secondary">Full API Documentation</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">⬡</span>
+                    <span class="logo-text">Humanproof</span>
+                    <p class="footer-tagline">Built for AI agents.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="#demo">Demo</a>
+                        <a href="#api">API</a>
+                        <a href="/docs/">Documentation</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <a href="/docs/api.md">API Reference</a>
+                        <a href="/docs/integration.md">Integration Guide</a>
+                        <a href="/docs/challenges.md">Challenge Types</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Connect</h4>
+                        <a href="https://github.com/rezudious/nothuman" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Open source under MIT License</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>

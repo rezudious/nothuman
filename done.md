@@ -117,3 +117,13 @@
 
 **Commit:** `cd6e67d` - feat(demo): add interactive demo page
 **Demo URL:** https://nothuman-demo.pages.dev
+
+### Stats Endpoint
+- [x] GET /stats endpoint
+- [x] Query D1 for last 24h challenges
+- [x] Total challenges, success rate, avg solve time
+- [x] Breakdown by challenge type
+- [x] 7 unit tests
+
+**Commit:** `ad4a843` - feat(api): add GET /stats endpoint
+**Total Tests:** 131 passed

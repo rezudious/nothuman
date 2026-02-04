@@ -21,7 +21,7 @@ describe('Challenge Generation', () => {
 			const challenge = generateChallenge();
 
 			expect(challenge.id).toMatch(/^[0-9a-f-]{36}$/); // UUID format
-			expect(['structured_json', 'computational_array']).toContain(challenge.type);
+			expect(['structured_json', 'computational_array', 'pattern_completion']).toContain(challenge.type);
 			expect(challenge.prompt).toBeTruthy();
 			expect(challenge.expectedAnswer).toBeTruthy();
 			expect(challenge.nonce).toHaveLength(8);
@@ -56,6 +56,16 @@ describe('Challenge Generation', () => {
 
 			const answer = JSON.parse(challenge.expectedAnswer);
 			expect(answer).toHaveProperty('primeIndices');
+			expect(answer).toHaveProperty('checksum');
+		});
+
+		it('generates pattern_completion challenge', () => {
+			const challenge = generateChallengeOfType('pattern_completion');
+			expect(challenge.type).toBe('pattern_completion');
+			expect(challenge.prompt).toContain('sequence');
+
+			const answer = JSON.parse(challenge.expectedAnswer);
+			expect(answer).toHaveProperty('primeIndexTerms');
 			expect(answer).toHaveProperty('checksum');
 		});
 
@@ -96,6 +106,25 @@ describe('Challenge Generation', () => {
 			expect(challenge.parameters).toHaveProperty('array');
 			expect(challenge.parameters).toHaveProperty('arrayLength');
 			expect(Array.isArray((challenge.parameters as any).array)).toBe(true);
+		});
+	});
+
+	describe('pattern_completion challenges', () => {
+		it('produces parseable JSON expectedAnswer with primeIndexTerms and checksum', () => {
+			const challenge = generateChallengeOfType('pattern_completion');
+			const parsed = JSON.parse(challenge.expectedAnswer);
+			expect(parsed).toHaveProperty('primeIndexTerms');
+			expect(parsed).toHaveProperty('checksum');
+			expect(Array.isArray(parsed.primeIndexTerms)).toBe(true);
+		});
+
+		it('has parameters with seeds, multiplier, and operation', () => {
+			const challenge = generateChallengeOfType('pattern_completion');
+			expect(challenge.parameters).toHaveProperty('seed1');
+			expect(challenge.parameters).toHaveProperty('seed2');
+			expect(challenge.parameters).toHaveProperty('multiplier');
+			expect(challenge.parameters).toHaveProperty('operation');
+			expect(challenge.parameters).toHaveProperty('totalTerms');
 		});
 	});
 });

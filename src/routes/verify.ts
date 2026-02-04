@@ -3,6 +3,7 @@ import type { AppEnv } from '../index';
 import { ChallengeDB } from '../db';
 import { validateStructuredJson } from '../challenges/types/structured-json';
 import { validateComputationalArray } from '../challenges/types/computational-array';
+import { validatePatternCompletion } from '../challenges/types/pattern-completion';
 import { generateVerificationToken } from '../auth/token';
 
 const verifyRoutes = new Hono<AppEnv>();
@@ -72,6 +73,9 @@ verifyRoutes.post('/', async (c) => {
 			break;
 		case 'computational_array':
 			isValid = validateComputationalArray(solution, challenge.expected_answer);
+			break;
+		case 'pattern_completion':
+			isValid = validatePatternCompletion(solution, challenge.expected_answer);
 			break;
 		default:
 			return c.json({ success: false, error: 'Unknown challenge type' } satisfies VerifyFailureResponse, 500);

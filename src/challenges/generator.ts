@@ -2,6 +2,7 @@ import type { Challenge, ChallengeType, ChallengeGenerator } from './types';
 import { generateNonce } from '../utils/nonce';
 import { generateStructuredJsonChallenge } from './types/structured-json';
 import { generateComputationalArrayChallenge } from './types/computational-array';
+import { generatePatternCompletionChallenge } from './types/pattern-completion';
 
 const CHALLENGE_TTL_MS = 3000; // 3 seconds
 
@@ -35,7 +36,22 @@ const computationalArrayGenerator: ChallengeGenerator = {
 	},
 };
 
-const generators: ChallengeGenerator[] = [structuredJsonGenerator, computationalArrayGenerator];
+// Pattern completion challenge generator
+const patternCompletionGenerator: ChallengeGenerator = {
+	type: 'pattern_completion',
+	generate(nonce: string) {
+		const result = generatePatternCompletionChallenge(nonce);
+		return {
+			type: 'pattern_completion' as const,
+			prompt: result.prompt,
+			expectedAnswer: result.expectedAnswer,
+			nonce,
+			parameters: result.parameters,
+		};
+	},
+};
+
+const generators: ChallengeGenerator[] = [structuredJsonGenerator, computationalArrayGenerator, patternCompletionGenerator];
 
 export function generateChallenge(): Challenge {
 	const generator = generators[Math.floor(Math.random() * generators.length)];

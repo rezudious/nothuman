@@ -136,4 +136,15 @@
 - [x] Logs visible in Cloudflare Dashboard > Workers > Logs
 
 **Commit:** `93b6054` - feat(logging): add structured JSON logging
+
+### Documentation
+- [x] /docs/api.md - API reference with curl/JS/Python examples
+- [x] /docs/integration.md - Step-by-step guide with flow diagram
+- [x] /docs/challenges.md - Challenge types explained with tips
+- [x] /docs/index.html - Documentation landing page
+- [x] Updated demo with docs link
+- [x] Deployed to Cloudflare Pages
+
+**Commit:** `cfa7220` - docs: add API documentation
+**Docs URL:** https://nothuman-demo.pages.dev/docs/
 **Total Tests:** 131 passed

@@ -159,4 +159,23 @@
 - [x] Project structure
 
 **Commit:** `179c05f` - docs: enhance README for v1.0 release
+
+### Domain Migration
+- [x] Custom domain: api.humanproof.dev
+- [x] Updated 37 URL references across 12 files
+
+**Commit:** `aefb391` - chore: update API domain to api.humanproof.dev
+
+### Landing Page (humanproof.dev)
+- [x] Hero section with gradient title, stats, code preview
+- [x] "How it Works" 3-step flow with icons
+- [x] Challenge types with difficulty badges
+- [x] Interactive demo (preserved functionality)
+- [x] API reference section with endpoint cards
+- [x] Fixed nav with blur backdrop
+- [x] Mobile responsive design
+- [x] Rebranded to "Humanproof"
+
+**Commit:** `553475e` - feat(landing): upgrade demo to full landing page
+**Landing URL:** https://humanproof.dev
 **Total Tests:** 131 passed

@@ -3,6 +3,7 @@ import { generateNonce } from '../utils/nonce';
 import { generateStructuredJsonChallenge } from './types/structured-json';
 import { generateComputationalArrayChallenge } from './types/computational-array';
 import { generatePatternCompletionChallenge } from './types/pattern-completion';
+import { generateConstraintTextChallenge } from './types/constraint-text';
 
 const CHALLENGE_TTL_MS = 3000; // 3 seconds
 
@@ -51,7 +52,27 @@ const patternCompletionGenerator: ChallengeGenerator = {
 	},
 };
 
-const generators: ChallengeGenerator[] = [structuredJsonGenerator, computationalArrayGenerator, patternCompletionGenerator];
+// Constraint text challenge generator
+const constraintTextGenerator: ChallengeGenerator = {
+	type: 'constraint_text',
+	generate(nonce: string) {
+		const result = generateConstraintTextChallenge(nonce);
+		return {
+			type: 'constraint_text' as const,
+			prompt: result.prompt,
+			expectedAnswer: result.expectedAnswer,
+			nonce,
+			parameters: result.parameters,
+		};
+	},
+};
+
+const generators: ChallengeGenerator[] = [
+	structuredJsonGenerator,
+	computationalArrayGenerator,
+	patternCompletionGenerator,
+	constraintTextGenerator,
+];
 
 export function generateChallenge(): Challenge {
 	const generator = generators[Math.floor(Math.random() * generators.length)];

@@ -148,10 +148,22 @@ describe('API Routes', () => {
 			});
 			const challengeData = await challengeResponse.json();
 
-			// Get the expected answer from database (cheating for test purposes)
-			const dbChallenge = await env.DB.prepare('SELECT expected_answer FROM challenges WHERE id = ?')
+			// Get the expected answer and type from database (cheating for test purposes)
+			const dbChallenge = await env.DB.prepare('SELECT expected_answer, type FROM challenges WHERE id = ?')
 				.bind(challengeData.challengeId)
-				.first<{ expected_answer: string }>();
+				.first<{ expected_answer: string; type: string }>();
+
+			// Generate correct solution based on challenge type
+			let solution: string;
+			if (dbChallenge!.type === 'constraint_text') {
+				// For constraint_text, expected_answer is the phrase, need to generate words
+				const phrase = dbChallenge!.expected_answer;
+				const words = phrase.split('').map((letter: string) => letter + 'ord');
+				solution = words.join(' ');
+			} else {
+				// For other types, expected_answer is the exact solution
+				solution = dbChallenge!.expected_answer;
+			}
 
 			// Verify with correct solution
 			const verifyResponse = await SELF.fetch('https://example.com/verify', {
@@ -159,7 +171,7 @@ describe('API Routes', () => {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					challengeId: challengeData.challengeId,
-					solution: dbChallenge!.expected_answer,
+					solution,
 				}),
 			});
 
@@ -179,10 +191,20 @@ describe('API Routes', () => {
 			});
 			const challengeData = await challengeResponse.json();
 
-			// Get the expected answer
-			const dbChallenge = await env.DB.prepare('SELECT expected_answer FROM challenges WHERE id = ?')
+			// Get the expected answer and type
+			const dbChallenge = await env.DB.prepare('SELECT expected_answer, type FROM challenges WHERE id = ?')
 				.bind(challengeData.challengeId)
-				.first<{ expected_answer: string }>();
+				.first<{ expected_answer: string; type: string }>();
+
+			// Generate correct solution based on challenge type
+			let solution: string;
+			if (dbChallenge!.type === 'constraint_text') {
+				const phrase = dbChallenge!.expected_answer;
+				const words = phrase.split('').map((letter: string) => letter + 'ord');
+				solution = words.join(' ');
+			} else {
+				solution = dbChallenge!.expected_answer;
+			}
 
 			// Solve it once
 			await SELF.fetch('https://example.com/verify', {
@@ -190,7 +212,7 @@ describe('API Routes', () => {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					challengeId: challengeData.challengeId,
-					solution: dbChallenge!.expected_answer,
+					solution,
 				}),
 			});
 
@@ -200,7 +222,7 @@ describe('API Routes', () => {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					challengeId: challengeData.challengeId,
-					solution: dbChallenge!.expected_answer,
+					solution,
 				}),
 			});
 
@@ -217,10 +239,20 @@ describe('API Routes', () => {
 			});
 			const challengeData = await challengeResponse.json();
 
-			// Get the expected answer
-			const dbChallenge = await env.DB.prepare('SELECT expected_answer FROM challenges WHERE id = ?')
+			// Get the expected answer and type
+			const dbChallenge = await env.DB.prepare('SELECT expected_answer, type FROM challenges WHERE id = ?')
 				.bind(challengeData.challengeId)
-				.first<{ expected_answer: string }>();
+				.first<{ expected_answer: string; type: string }>();
+
+			// Generate correct solution based on challenge type
+			let solution: string;
+			if (dbChallenge!.type === 'constraint_text') {
+				const phrase = dbChallenge!.expected_answer;
+				const words = phrase.split('').map((letter: string) => letter + 'ord');
+				solution = words.join(' ');
+			} else {
+				solution = dbChallenge!.expected_answer;
+			}
 
 			// Solve it
 			await SELF.fetch('https://example.com/verify', {
@@ -228,7 +260,7 @@ describe('API Routes', () => {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					challengeId: challengeData.challengeId,
-					solution: dbChallenge!.expected_answer,
+					solution,
 				}),
 			});
 
@@ -280,12 +312,24 @@ describe('API Routes', () => {
 				.bind(challengeData.challengeId)
 				.first<{ expected_answer: string; type: string }>();
 
+			// Generate correct solution based on challenge type
+			let solution: string;
+			if (dbChallenge!.type === 'constraint_text') {
+				// For constraint_text, expected_answer is the phrase, need to generate words
+				const phrase = dbChallenge!.expected_answer;
+				const words = phrase.split('').map((letter: string) => letter + 'ord');
+				solution = words.join(' ');
+			} else {
+				// For other types, expected_answer is the exact solution
+				solution = dbChallenge!.expected_answer;
+			}
+
 			const verifyResponse = await SELF.fetch('https://example.com/verify', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					challengeId: challengeData.challengeId,
-					solution: dbChallenge!.expected_answer,
+					solution,
 				}),
 			});
 

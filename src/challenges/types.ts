@@ -1,4 +1,4 @@
-export type ChallengeType = 'structured_json' | 'computational_array' | 'pattern_completion';
+export type ChallengeType = 'structured_json' | 'computational_array' | 'pattern_completion' | 'constraint_text';
 
 export interface Challenge {
 	id: string;

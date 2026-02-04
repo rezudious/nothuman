@@ -21,7 +21,9 @@ describe('Challenge Generation', () => {
 			const challenge = generateChallenge();
 
 			expect(challenge.id).toMatch(/^[0-9a-f-]{36}$/); // UUID format
-			expect(['structured_json', 'computational_array', 'pattern_completion']).toContain(challenge.type);
+			expect(['structured_json', 'computational_array', 'pattern_completion', 'constraint_text']).toContain(
+				challenge.type
+			);
 			expect(challenge.prompt).toBeTruthy();
 			expect(challenge.expectedAnswer).toBeTruthy();
 			expect(challenge.nonce).toHaveLength(8);

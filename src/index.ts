@@ -2,10 +2,12 @@ import { Hono } from 'hono';
 import type { D1Database } from '@cloudflare/workers-types';
 import { challengeRoutes } from './routes/challenge';
 import { verifyRoutes } from './routes/verify';
+import { tokenRoutes } from './routes/token';
 
 // Types
 type Bindings = {
 	DB: D1Database;
+	JWT_SECRET: string;
 };
 
 type Variables = {
@@ -53,5 +55,6 @@ app.get('/health', async (c) => {
 // Mount routes
 app.route('/challenge', challengeRoutes);
 app.route('/verify', verifyRoutes);
+app.route('/token', tokenRoutes);
 
 export default app;

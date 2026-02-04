@@ -131,7 +131,7 @@ describe('API Routes', () => {
 			expect(data.error).toBe('Invalid solution');
 		});
 
-		it('returns success for correct solution', async () => {
+		it('returns success with token for correct solution', async () => {
 			// Create a challenge and get the expected answer from DB
 			const challengeResponse = await SELF.fetch('https://example.com/challenge', {
 				method: 'POST',
@@ -157,6 +157,9 @@ describe('API Routes', () => {
 			const data = await verifyResponse.json();
 			expect(data.success).toBe(true);
 			expect(data.solveTimeMs).toBeGreaterThanOrEqual(0);
+			expect(data.token).toBeTruthy();
+			expect(typeof data.token).toBe('string');
+			expect(data.token.split('.')).toHaveLength(3); // JWT format
 		});
 
 		it('returns 400 for already solved challenge', async () => {
@@ -227,6 +230,71 @@ describe('API Routes', () => {
 			expect(solvedChallenge?.solved).toBe(1);
 			expect(solvedChallenge?.solved_at).toBeGreaterThan(0);
 			expect(solvedChallenge?.solve_time_ms).toBeGreaterThanOrEqual(0);
+		});
+	});
+
+	describe('POST /token/validate', () => {
+		it('returns 400 for missing token', async () => {
+			const response = await SELF.fetch('https://example.com/token/validate', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({}),
+			});
+
+			expect(response.status).toBe(400);
+			const data = await response.json();
+			expect(data.valid).toBe(false);
+			expect(data.error).toBe('Missing token');
+		});
+
+		it('returns 400 for invalid token', async () => {
+			const response = await SELF.fetch('https://example.com/token/validate', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ token: 'invalid-token' }),
+			});
+
+			expect(response.status).toBe(400);
+			const data = await response.json();
+			expect(data.valid).toBe(false);
+		});
+
+		it('validates token from successful verification', async () => {
+			// Create and solve a challenge
+			const challengeResponse = await SELF.fetch('https://example.com/challenge', {
+				method: 'POST',
+			});
+			const challengeData = await challengeResponse.json();
+
+			const dbChallenge = await env.DB.prepare('SELECT expected_answer, type FROM challenges WHERE id = ?')
+				.bind(challengeData.challengeId)
+				.first<{ expected_answer: string; type: string }>();
+
+			const verifyResponse = await SELF.fetch('https://example.com/verify', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					challengeId: challengeData.challengeId,
+					solution: dbChallenge!.expected_answer,
+				}),
+			});
+
+			const verifyData = await verifyResponse.json();
+
+			// Validate the token
+			const validateResponse = await SELF.fetch('https://example.com/token/validate', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ token: verifyData.token }),
+			});
+
+			expect(validateResponse.status).toBe(200);
+			const validateData = await validateResponse.json();
+			expect(validateData.valid).toBe(true);
+			expect(validateData.payload.sub).toBe('ai_verification');
+			expect(validateData.payload.challenge_id).toBe(challengeData.challengeId);
+			expect(validateData.payload.challenge_type).toBe(dbChallenge!.type);
+			expect(validateData.payload.issuer).toBe('nothuman.dev');
 		});
 	});
 });

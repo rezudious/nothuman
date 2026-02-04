@@ -340,7 +340,14 @@ h2 {
     border-top: 1px solid var(--border);
 }
 
-.footer a {
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.footer-link {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -350,11 +357,11 @@ h2 {
     transition: color 0.2s ease;
 }
 
-.footer a:hover {
+.footer-link:hover {
     color: var(--accent);
 }
 
-.github-icon {
+.footer-link svg {
     opacity: 0.8;
 }
 

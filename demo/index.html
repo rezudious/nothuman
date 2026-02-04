@@ -349,6 +349,120 @@
             </div>
         </section>
 
+        <!-- Integration Examples Section -->
+        <section class="section integration-section">
+            <div class="container">
+                <h2 class="section-title">Integration Examples</h2>
+                <p class="section-subtitle">Copy-paste code to integrate in minutes</p>
+
+                <div class="code-tabs-container">
+                    <div class="code-tabs">
+                        <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                        <button class="code-tab" data-lang="python">Python</button>
+                        <button class="code-tab" data-lang="curl">curl</button>
+                    </div>
+
+                    <div class="code-panel active" data-lang="javascript">
+                        <div class="code-block">
+                            <button class="copy-btn" data-target="js-code">
+                                <span class="copy-text">Copy</span>
+                                <span class="copied-text">Copied!</span>
+                            </button>
+                            <pre id="js-code"><code><span class="code-comment">// 1. Request a challenge</span>
+<span class="code-keyword">const</span> challenge = <span class="code-keyword">await</span> fetch(<span class="code-string">'https://api.humanproof.dev/challenge'</span>, {
+  method: <span class="code-string">'POST'</span>,
+  headers: { <span class="code-string">'Content-Type'</span>: <span class="code-string">'application/json'</span> }
+}).<span class="code-method">then</span>(r => r.json());
+
+<span class="code-comment">// 2. Your AI solves the challenge</span>
+<span class="code-keyword">const</span> solution = <span class="code-keyword">await</span> <span class="code-method">solveChallenge</span>(challenge.prompt);
+
+<span class="code-comment">// 3. Submit the solution</span>
+<span class="code-keyword">const</span> result = <span class="code-keyword">await</span> fetch(<span class="code-string">'https://api.humanproof.dev/verify'</span>, {
+  method: <span class="code-string">'POST'</span>,
+  headers: { <span class="code-string">'Content-Type'</span>: <span class="code-string">'application/json'</span> },
+  body: JSON.stringify({
+    challengeId: challenge.challengeId,
+    solution: solution
+  })
+}).<span class="code-method">then</span>(r => r.json());
+
+<span class="code-comment">// 4. Use the verification token</span>
+<span class="code-keyword">if</span> (result.success) {
+  console.log(<span class="code-string">'Verified! Token:'</span>, result.token);
+  <span class="code-comment">// Pass token to AI-only services</span>
+  headers[<span class="code-string">'Authorization'</span>] = <span class="code-string">`Bearer </span><span class="code-keyword">${</span>result.token<span class="code-keyword">}</span><span class="code-string">`</span>;
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="code-panel" data-lang="python">
+                        <div class="code-block">
+                            <button class="copy-btn" data-target="python-code">
+                                <span class="copy-text">Copy</span>
+                                <span class="copied-text">Copied!</span>
+                            </button>
+                            <pre id="python-code"><code><span class="code-keyword">import</span> requests
+
+<span class="code-comment"># 1. Request a challenge</span>
+challenge = requests.post(
+    <span class="code-string">'https://api.humanproof.dev/challenge'</span>,
+    headers={<span class="code-string">'Content-Type'</span>: <span class="code-string">'application/json'</span>}
+).json()
+
+<span class="code-comment"># 2. Your AI solves the challenge</span>
+solution = <span class="code-method">solve_challenge</span>(challenge[<span class="code-string">'prompt'</span>])
+
+<span class="code-comment"># 3. Submit the solution</span>
+result = requests.post(
+    <span class="code-string">'https://api.humanproof.dev/verify'</span>,
+    json={
+        <span class="code-string">'challengeId'</span>: challenge[<span class="code-string">'challengeId'</span>],
+        <span class="code-string">'solution'</span>: solution
+    }
+).json()
+
+<span class="code-comment"># 4. Use the verification token</span>
+<span class="code-keyword">if</span> result[<span class="code-string">'success'</span>]:
+    <span class="code-method">print</span>(<span class="code-string">f"Verified! Token: </span>{result[<span class="code-string">'token'</span>]}<span class="code-string">"</span>)
+    <span class="code-comment"># Pass token to AI-only services</span>
+    headers = {<span class="code-string">'Authorization'</span>: <span class="code-string">f"Bearer </span>{result[<span class="code-string">'token'</span>]}<span class="code-string">"</span>}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="code-panel" data-lang="curl">
+                        <div class="code-block">
+                            <button class="copy-btn" data-target="curl-code">
+                                <span class="copy-text">Copy</span>
+                                <span class="copied-text">Copied!</span>
+                            </button>
+                            <pre id="curl-code"><code><span class="code-comment"># 1. Request a challenge</span>
+CHALLENGE=$(<span class="code-method">curl</span> -s -X POST https://api.humanproof.dev/challenge \
+  -H <span class="code-string">"Content-Type: application/json"</span>)
+
+CHALLENGE_ID=$(<span class="code-method">echo</span> $CHALLENGE | <span class="code-method">jq</span> -r <span class="code-string">'.challengeId'</span>)
+PROMPT=$(<span class="code-method">echo</span> $CHALLENGE | <span class="code-method">jq</span> -r <span class="code-string">'.prompt'</span>)
+
+<span class="code-comment"># 2. Your AI solves the challenge (replace with actual solution)</span>
+SOLUTION=<span class="code-string">"your_ai_computed_solution"</span>
+
+<span class="code-comment"># 3. Submit the solution</span>
+RESULT=$(<span class="code-method">curl</span> -s -X POST https://api.humanproof.dev/verify \
+  -H <span class="code-string">"Content-Type: application/json"</span> \
+  -d <span class="code-string">"{\"challengeId\": \"$CHALLENGE_ID\", \"solution\": \"$SOLUTION\"}"</span>)
+
+<span class="code-comment"># 4. Extract and use the token</span>
+TOKEN=$(<span class="code-method">echo</span> $RESULT | <span class="code-method">jq</span> -r <span class="code-string">'.token'</span>)
+<span class="code-method">echo</span> <span class="code-string">"Verified! Token: $TOKEN"</span>
+
+<span class="code-comment"># Use token with AI-only services</span>
+<span class="code-method">curl</span> -H <span class="code-string">"Authorization: Bearer $TOKEN"</span> https://your-ai-service.com/api</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Interactive Demo Section -->
         <section id="demo" class="section demo-section">
             <div class="container">

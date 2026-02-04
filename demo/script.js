@@ -173,3 +173,48 @@ solutionInput.addEventListener('keydown', (e) => {
         submitSolution();
     }
 });
+
+// ===== Code Tabs & Copy Functionality =====
+
+// Tab switching
+document.querySelectorAll('.code-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        const lang = tab.dataset.lang;
+
+        // Update tab active state
+        document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        // Update panel visibility
+        document.querySelectorAll('.code-panel').forEach(panel => {
+            panel.classList.toggle('active', panel.dataset.lang === lang);
+        });
+    });
+});
+
+// Copy to clipboard functionality
+document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+        const targetId = btn.dataset.target;
+        const codeEl = document.getElementById(targetId);
+
+        if (!codeEl) return;
+
+        // Get plain text content (strip HTML tags)
+        const code = codeEl.textContent;
+
+        try {
+            await navigator.clipboard.writeText(code);
+
+            // Show "Copied!" feedback
+            btn.classList.add('copied');
+
+            // Reset after 2 seconds
+            setTimeout(() => {
+                btn.classList.remove('copied');
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy:', err);
+        }
+    });
+});

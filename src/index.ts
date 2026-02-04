@@ -1,5 +1,7 @@
 import { Hono } from 'hono';
 import type { D1Database } from '@cloudflare/workers-types';
+import { challengeRoutes } from './routes/challenge';
+import { verifyRoutes } from './routes/verify';
 
 // Types
 type Bindings = {
@@ -26,7 +28,7 @@ interface HealthResponse {
 // App
 const app = new Hono<AppEnv>();
 
-// Routes
+// Health check
 app.get('/health', async (c) => {
 	let dbStatus: 'connected' | 'error' = 'error';
 	let error: string | undefined;
@@ -47,5 +49,9 @@ app.get('/health', async (c) => {
 
 	return c.json(response, dbStatus === 'connected' ? 200 : 503);
 });
+
+// Mount routes
+app.route('/challenge', challengeRoutes);
+app.route('/verify', verifyRoutes);
 
 export default app;

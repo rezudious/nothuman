@@ -81,4 +81,27 @@
 - [x] Security audit (no console.logs, no hardcoded secrets)
 - [x] All 80 tests passing
 
-**Total Tests:** 80 passed
+**Commit:** `edbf33e`
+
+### Pattern Completion Challenge
+- [x] Fibonacci-like sequence with seed derivation from nonce
+- [x] Recurrence: term = (prev * multiplier) ± prevPrev
+- [x] Extract values at prime indices
+- [x] Checksum: (sum of prime terms) XOR nonce mod 1000000
+- [x] validatePatternCompletion() for answer verification
+- [x] 18 unit tests
+
+**Commit:** `edbf33e` - feat(challenges): add pattern completion challenge
+
+### Constraint Text Challenge
+- [x] Deterministic phrase from nonce (10-16 uppercase letters)
+- [x] Acrostic word challenge (first letter of each word spells phrase)
+- [x] Case-insensitive validation
+- [x] validateConstraintText() for answer verification
+- [x] 23 unit tests
+- [x] Updated routes tests for constraint_text solution format
+
+**Commit:** `1c1a402` - feat(challenges): add constraint_text challenge type
+
+**Total Tests:** 124 passed
+**Challenge Types:** 4 (structured_json, computational_array, pattern_completion, constraint_text)

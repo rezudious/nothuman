@@ -52,11 +52,11 @@ describe('Challenge Generation', () => {
 		it('generates computational_array challenge', () => {
 			const challenge = generateChallengeOfType('computational_array');
 			expect(challenge.type).toBe('computational_array');
-			expect(challenge.prompt).toContain('array');
+			expect(challenge.prompt).toContain('Array');
 
 			const answer = JSON.parse(challenge.expectedAnswer);
-			expect(answer).toHaveProperty('result');
-			expect(answer).toHaveProperty('nonce');
+			expect(answer).toHaveProperty('primeIndices');
+			expect(answer).toHaveProperty('checksum');
 		});
 
 		it('throws for unknown type', () => {
@@ -81,25 +81,21 @@ describe('Challenge Generation', () => {
 	});
 
 	describe('computational_array challenges', () => {
-		it('produces correct sum result', () => {
-			// Generate until we get a sum operation
-			let challenge;
-			for (let i = 0; i < 50; i++) {
-				challenge = generateChallengeOfType('computational_array');
-				if ((challenge.parameters as any)?.operation === 'sum') break;
-			}
-
-			if ((challenge!.parameters as any)?.operation === 'sum') {
-				const numbers = (challenge!.parameters as any).numbers as number[];
-				const answer = JSON.parse(challenge!.expectedAnswer);
-				expect(answer.result).toBe(numbers.reduce((a, b) => a + b, 0));
-			}
+		it('produces parseable JSON expectedAnswer with stats and checksum', () => {
+			const challenge = generateChallengeOfType('computational_array');
+			const parsed = JSON.parse(challenge.expectedAnswer);
+			expect(parsed).toHaveProperty('primeIndices');
+			expect(parsed).toHaveProperty('sumOfPrimes');
+			expect(parsed).toHaveProperty('evenCount');
+			expect(parsed).toHaveProperty('maxPrime');
+			expect(parsed).toHaveProperty('checksum');
 		});
 
-		it('has parameters with numbers and operation', () => {
+		it('has parameters with array and arrayLength', () => {
 			const challenge = generateChallengeOfType('computational_array');
-			expect(challenge.parameters).toHaveProperty('numbers');
-			expect(challenge.parameters).toHaveProperty('operation');
+			expect(challenge.parameters).toHaveProperty('array');
+			expect(challenge.parameters).toHaveProperty('arrayLength');
+			expect(Array.isArray((challenge.parameters as any).array)).toBe(true);
 		});
 	});
 });

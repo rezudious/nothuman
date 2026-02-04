@@ -29,9 +29,9 @@ describe('Challenge Generation', () => {
 			expect(challenge.expiresAt).toBeGreaterThan(challenge.createdAt);
 		});
 
-		it('includes nonce in expectedAnswer', () => {
+		it('includes nonce in prompt', () => {
 			const challenge = generateChallenge();
-			expect(challenge.expectedAnswer).toContain(challenge.nonce);
+			expect(challenge.prompt).toContain(challenge.nonce);
 		});
 
 		it('sets expiry 3 seconds after creation', () => {
@@ -45,8 +45,8 @@ describe('Challenge Generation', () => {
 		it('generates structured_json challenge', () => {
 			const challenge = generateChallengeOfType('structured_json');
 			expect(challenge.type).toBe('structured_json');
-			expect(challenge.prompt).toContain('JSON object');
-			expect(JSON.parse(challenge.expectedAnswer)).toHaveProperty('nonce');
+			expect(challenge.prompt).toContain('calendar');
+			expect(JSON.parse(challenge.expectedAnswer)).toHaveProperty('checksum');
 		});
 
 		it('generates computational_array challenge', () => {
@@ -65,16 +65,18 @@ describe('Challenge Generation', () => {
 	});
 
 	describe('structured_json challenges', () => {
-		it('produces parseable JSON expectedAnswer', () => {
+		it('produces parseable JSON expectedAnswer with calendar and checksum', () => {
 			const challenge = generateChallengeOfType('structured_json');
 			const parsed = JSON.parse(challenge.expectedAnswer);
-			expect(parsed.nonce).toBe(challenge.nonce);
+			expect(parsed).toHaveProperty('calendar');
+			expect(parsed).toHaveProperty('checksum');
 		});
 
-		it('has parameters with selected fields', () => {
+		it('has parameters with year and properties', () => {
 			const challenge = generateChallengeOfType('structured_json');
-			expect(challenge.parameters).toHaveProperty('fields');
-			expect(Array.isArray((challenge.parameters as any).fields)).toBe(true);
+			expect(challenge.parameters).toHaveProperty('year');
+			expect(challenge.parameters).toHaveProperty('properties');
+			expect(Array.isArray((challenge.parameters as any).properties)).toBe(true);
 		});
 	});
 

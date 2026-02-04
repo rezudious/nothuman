@@ -1,5 +1,6 @@
 import type { Challenge, ChallengeType, ChallengeGenerator } from './types';
 import { generateNonce } from '../utils/nonce';
+import { generateStructuredJsonChallenge } from './types/structured-json';
 
 const CHALLENGE_TTL_MS = 3000; // 3 seconds
 
@@ -7,31 +8,13 @@ const CHALLENGE_TTL_MS = 3000; // 3 seconds
 const structuredJsonGenerator: ChallengeGenerator = {
 	type: 'structured_json',
 	generate(nonce: string) {
-		const fields = ['name', 'age', 'city', 'email', 'status'];
-		const numFields = 2 + Math.floor(Math.random() * 3); // 2-4 fields
-		const selectedFields = fields.sort(() => Math.random() - 0.5).slice(0, numFields);
-
-		const expectedObject: Record<string, string | number> = {};
-		for (const field of selectedFields) {
-			if (field === 'age') {
-				expectedObject[field] = Math.floor(Math.random() * 80) + 18;
-			} else if (field === 'status') {
-				expectedObject[field] = ['active', 'pending', 'inactive'][Math.floor(Math.random() * 3)];
-			} else {
-				expectedObject[field] = `${field}_${nonce.slice(0, 4)}`;
-			}
-		}
-
-		const prompt = `Return a JSON object with exactly these fields and values: ${JSON.stringify(expectedObject)}. Include nonce "${nonce}" in a field called "nonce".`;
-
-		const expectedAnswer = JSON.stringify({ ...expectedObject, nonce }, Object.keys({ ...expectedObject, nonce }).sort());
-
+		const result = generateStructuredJsonChallenge(nonce);
 		return {
 			type: 'structured_json' as const,
-			prompt,
-			expectedAnswer,
+			prompt: result.prompt,
+			expectedAnswer: result.expectedAnswer,
 			nonce,
-			parameters: { fields: selectedFields },
+			parameters: result.parameters,
 		};
 	},
 };
